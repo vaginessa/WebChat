@@ -35,7 +35,11 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['develop']
             },
-
+            html: {
+                files: [
+                    'index.html'
+                ]
+            },
             css: {
                 files: [
                     'style.scss'
