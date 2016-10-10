@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Webchat</title>
+		<style>
+			* { margin: 0; padding: 0; box-sizing: border-box; }
+			body { font: 16px Helvetica, Arial; height: 100%; width: 100%; position:absolute; }
+
+			#receiveMessageContainer { position: absolute; width: 100%; height: 100%; overflow-y: scroll; padding-bottom:50px; }
+			#receiveMessageContainer div { padding: 5px 10px; }
+			#receiveMessageContainer div:nth-child(odd) { background: #eee; }
+
+			#sendMessageContainer { background: #000; padding: 3px; position: absolute; bottom: 0; width: 100%; height: 50px;}
+			#inputBox { font: 14px Helvetica, Arial; resize:none; border: 0; padding: 10px; width: 90%; margin-right: .5%; background-color:#FFFFFF; display:inline-block }
+			#sendButton { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; cursor: pointer }
+			
+			.metaMessage {background-color: #c4f7c4!important;}
+		</style>
+	</head>
+	<body>
+		<div id="nameSelectorPopup"></div>
+
+
+
+		<div id="receiveMessageContainer"></div>
+
+		<div id="sendMessageContainer">
+			<textarea id="inputBox"></textarea> 
+			<div id="sendButton">Send</div>
+		</div>
+
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="marked.js"></script>
+		<script>
+            document.addEventListener("DOMContentLoaded", function() {
+
+                if (!Notification) {
+                    alert('Desktop notifications not available in your browser. Try Chromium.');
+                    return;
+                } else if (Notification.permission !== "granted") {
+                    Notification.requestPermission();
+                }
+
+                var socket = io();
+                var username;
+
+                do {
+                  username = prompt("What is your name?");
+                } while (!username);
+				socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true});
+
+                var receiveMessageContainer = document.getElementById("receiveMessageContainer");
+                var inputBox = document.getElementById("inputBox");
+                var sendButton = document.getElementById("sendButton");
+
+                inputBox.focus(); // put cursor directly into inputBox
+                inputBox.addEventListener("keydown", function(key) { // check for enter/shift+enter
+                    if (key.keyCode === 13 && !key.shiftKey) {
+                        submitMessage(key); // send message only if enter and not shift is pressed
+                    }
+                });
+
+                sendButton.addEventListener("click", function(event) {
+                    submitMessage(event); // send message if send button was clicked
+                });
+
+                socket.addEventListener("loadMessages", function(messageList) {
+                    for (var i = 0; i < messageList.length; i++) {
+                        displayText(messageList[i]);
+                    }
+                });
+
+				window.onbeforeunload = function(event) {
+                    socket.emit("chatMessage", {username: username, message: " is now offline.", isMetaMessage: true});
+                };
+
+
+                var submitMessage = function(event) {
+                    var message = inputBox.value;
+
+                    if (message.trim().length > 0) {
+                        inputBox.value = "";
+                        console.log(message);
+                        socket.emit("chatMessage", {username: username, message: message});
+                    }
+                    event.preventDefault();
+                };
+
+
+                function notify(text) {
+                    var notification = new Notification("Webchat", {
+                        body: text
+                    });
+                    setTimeout(function() {
+                        notification.close();
+                    }, 2000);
+                    notification.onclick = function() {
+                        window.focus();
+                        notification.close();
+                    };
+                }
+
+                socket.addEventListener("receiveMessage", function(message) {
+                    displayText(message);
+                    notify(message.username + ": " + message.message);
+                });
+
+                socket.addEventListener("userDisconnect", function() {
+                    //displayText(username + " is now offline.");
+					notify("Offline!");
+                });
+
+                function displayText(message) {
+                    var receiveBox = document.getElementById("receiveMessageContainer");
+                    var div = document.createElement("div");
+					
+					var output;
+					if (message.isMetaMessage) {
+						output = message.username + message.message;
+						div.classList.add("metaMessage");
+					} else {
+						console.log(message.message);
+						output = "<b><i>" + message.username + "</i></b>:<br>" + marked(message.message, {
+							sanitize: true,
+							smartypants: true
+						});
+					}
+					
+                    div.innerHTML = output;
+                    receiveBox.appendChild(div);
+                    div.scrollIntoView();
+                }
+            }, false);
+		</script>
+	</body>
+</html>
