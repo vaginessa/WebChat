@@ -35,7 +35,7 @@
                 do {
                     username = prompt("What is your name?");
                 } while (!username);
-                socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true});
+                socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true, isOnline: true});
 
                 var receiveMessageContainer = document.getElementById("receiveMessageContainer");
                 var inputBox = document.getElementById("inputBox");
@@ -59,7 +59,7 @@
                 });
 
                 window.onbeforeunload = function(event) {
-                    socket.emit("chatMessage", {username: username, message: " is now offline.", isMetaMessage: true});
+                    socket.emit("chatMessage", {username: username, message: " is now offline.", isMetaMessage: true, isOnline:false});
                 };
 
 
@@ -93,11 +93,6 @@
                     notify(message.username + ": " + message.message);
                 });
 
-                socket.addEventListener("userDisconnect", function() {
-                    //displayText(username + " is now offline.");
-                    notify("Offline!");
-                });
-
                 function displayText(message) {
                     var receiveBox = document.getElementById("receiveMessageContainer");
                     var div = document.createElement("div");
@@ -110,7 +105,12 @@
 					var appendix;
                     if (message.isMetaMessage) {
 						appendix = " "
-                        div.classList.add("metaMessage");
+						if (message.isOnline) {
+							div.classList.add("online");
+						} else {
+							div.classList.add("offline");
+						}
+						div.classList.add("metaMessage");
                     } else {
 						appendix = ":"
                     }
