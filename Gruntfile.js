@@ -13,9 +13,12 @@ module.exports = function (grunt) {
             }
         },
         sass: {
+            options: {
+                sourceMap: true
+            },
             dist: {
                 files: {
-                    'public/css/style.css': 'public/css/style.scss'
+                    'public/style.css': 'style.scss'
                 }
             }
         },
@@ -31,15 +34,15 @@ module.exports = function (grunt) {
                     'index.js'
                 ],
                 tasks: ['develop']
+            },
+
+            css: {
+                files: [
+                    'style.scss'
+                ],
+                tasks: ['sass']
             }
-            /*
-             css: {
-             files: [
-             'public/css/!*.scss'
-             ],
-             tasks: ['sass']
-             }
-             */
+
         }
     });
 

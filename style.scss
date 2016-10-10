@@ -18,14 +18,12 @@ body {
     height: 100%;
     overflow-y: scroll;
     padding-bottom: 50px;
-}
-
-#receiveMessageContainer div {
-    padding: 5px 10px;
-}
-
-#receiveMessageContainer div:nth-child(odd) {
-    background: #eee;
+    div {
+        padding: 5px 10px;
+        &:nth-child(odd) {
+            background: #eee;
+        }
+    }
 }
 
 #sendMessageContainer {
@@ -56,13 +54,15 @@ body {
     cursor: pointer
 }
 
-.online {
-    background-color: #c4f7c4 !important;
-}
+div {
+    .online {
+        background-color: #c4f7c4 !important;
+    }
 
-.offline {
-    background-color: #f77f79 !important;
+    .offline {
+        background-color: #f77f79 !important;
 
+    }
 }
 
 .usernameDisplay {

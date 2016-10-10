@@ -52,3 +52,4 @@ jspm_packages
 
 # Output of 'npm pack'
 *.tgz.idea/
+public/style*
