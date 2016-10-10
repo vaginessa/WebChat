@@ -4,6 +4,11 @@
   "description": "SOCKET CHAT",
   "dependencies": {
     "express": "^4.14.0",
-    "socket.io": "^1.5.0"
+    "grunt": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-develop": "^0.4.0",
+    "load-grunt-tasks": "^3.5.2",
+    "socket.io": "^1.5.0",
+    "time-grunt": "^1.4.0"
   }
 }
