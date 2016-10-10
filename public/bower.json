@@ -1,9 +1,0 @@
-{
-  "name": "webchat",
-  "homepage": "https://github.com/Aenadon/WebChat",
-  "description": "",
-  "main": "",
-  "dependencies": {
-    "marked": "^0.3.6"
-  }
-}

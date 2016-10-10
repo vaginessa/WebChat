@@ -26,13 +26,14 @@
 		<div id="receiveMessageContainer"></div>
 
 		<div id="sendMessageContainer">
-			<textarea id="inputBox"></textarea> 
+			<textarea id="inputBox"></textarea>
 			<div id="sendButton">Send</div>
 		</div>
 
 		<script src="/socket.io/socket.io.js"></script>
-        <script src="/bower_components/marked/marked.min.js"></script>
-		<script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"
+                integrity="sha256-mJAzKDq6kSoKqZKnA6UNLtPaIj8zT2mFnWu/GSouhgQ=" crossorigin="anonymous"></script>
+        <script>
             document.addEventListener("DOMContentLoaded", function() {
 
                 if (!Notification) {
