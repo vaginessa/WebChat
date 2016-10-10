@@ -4,9 +4,6 @@ save.json
 # Netbeans Folder
 nbproject
 
-# Folder with external files
-public/bower_components/
-
 # Webstorm
 .idea/
 

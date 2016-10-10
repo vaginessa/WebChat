@@ -120,25 +120,20 @@
                     var spanMessage = document.createElement("span");
                     spanUsername.classList.add("usernameDisplay");
                     spanMessage.classList.add("messageDisplay");
-
-                    var output;
+					
+					var appendix;
                     if (message.isMetaMessage) {
-                        output = message.username + message.message;
+						appendix = " "
                         div.classList.add("metaMessage");
                     } else {
-                        console.log(message.message);
-                        output = "<b><i>" + message.username + "</i></b>:<br>" + marked(message.message, {
-                            sanitize: true,
-                            smartypants: true
-                        });
+						appendix = ":"
                     }
-                    spanUsername.innerHTML = message.username + ":";
+                    spanUsername.textContent = message.username + appendix;
                     spanMessage.innerHTML = marked(message.message, {
                             sanitize: true,
                             smartypants: true
                         });
                     div.appendChild(spanUsername);
-                    div.appendChild(document.createElement("br"));
                     div.appendChild(spanMessage);
                     receiveBox.appendChild(div);
                     div.scrollIntoView();
