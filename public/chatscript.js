@@ -1,5 +1,17 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    var username = "NoName";
+    var modalContainer = document.getElementById("modalContainer");
+    var modalInput = document.getElementById("usernameInput");
+
+    modalInput.addEventListener("keypress", function(key) { // check for enter/shift+enter
+        if (key.keyCode === 13) {
+            console.log(modalInput);
+            username = modalInput.value;
+            modalContainer.style.display = "none";
+        }
+    });
+    
     if (!Notification) {
         alert('Desktop notifications not available in your browser. Try Chromium.');
     } else if (Notification.permission !== "granted") {
@@ -7,10 +19,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     var socket = io();
-    var username;
 
     do {
-        username = prompt("What is your name?");
+        //username = prompt("What is your name?");
     } while (!username);
     socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true, isOnline: true});
 
@@ -19,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var sendButton = document.getElementById("sendButton");
 
     inputBox.focus(); // put cursor directly into inputBox
-    inputBox.addEventListener("keydown", function(key) { // check for enter/shift+enter
+    inputBox.addEventListener("keypress", function(key) { // check for enter/shift+enter
         if (key.keyCode === 13 && !key.shiftKey) {
             submitMessage(key); // send message only if enter and not shift is pressed
         }

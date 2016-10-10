@@ -84,10 +84,17 @@ div {
 }
 
 #modal {
-    width: 800px;
-    height: 600px;
+    padding: 20px;
     background-color: lightgray;
     h1 {
-
+        text-align:center;
+    }
+    #usernameInput {
+        margin-top: 20px;
+        text-align:center;
+        font-size: 25px;
+        width: 100%;
+        border: none;
+        background-color: darkgray;
     }
 }
