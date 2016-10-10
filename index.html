@@ -13,8 +13,9 @@
 			#sendMessageContainer { background: #000; padding: 3px; position: absolute; bottom: 0; width: 100%; height: 50px;}
 			#inputBox { font: 14px Helvetica, Arial; resize:none; border: 0; padding: 10px; width: 90%; margin-right: .5%; background-color:#FFFFFF; display:inline-block }
 			#sendButton { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; cursor: pointer }
-			
+
 			.metaMessage {background-color: #c4f7c4!important;}
+			.usernameDisplay {font-weight: bold}
 		</style>
 	</head>
 	<body>
@@ -45,9 +46,9 @@
                 var username;
 
                 do {
-                  username = prompt("What is your name?");
+                    username = prompt("What is your name?");
                 } while (!username);
-				socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true});
+                socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true});
 
                 var receiveMessageContainer = document.getElementById("receiveMessageContainer");
                 var inputBox = document.getElementById("inputBox");
@@ -70,7 +71,7 @@
                     }
                 });
 
-				window.onbeforeunload = function(event) {
+                window.onbeforeunload = function(event) {
                     socket.emit("chatMessage", {username: username, message: " is now offline.", isMetaMessage: true});
                 };
 
@@ -107,26 +108,37 @@
 
                 socket.addEventListener("userDisconnect", function() {
                     //displayText(username + " is now offline.");
-					notify("Offline!");
+                    notify("Offline!");
                 });
 
                 function displayText(message) {
                     var receiveBox = document.getElementById("receiveMessageContainer");
                     var div = document.createElement("div");
-					
-					var output;
-					if (message.isMetaMessage) {
-						output = message.username + message.message;
-						div.classList.add("metaMessage");
-					} else {
-						console.log(message.message);
-						output = "<b><i>" + message.username + "</i></b>:<br>" + marked(message.message, {
-							sanitize: true,
-							smartypants: true
-						});
-					}
-					
-                    div.innerHTML = output;
+
+                    var spanUsername = document.createElement("span");
+                    var spanMessage = document.createElement("span");
+                    spanUsername.classList.add("usernameDisplay");
+                    spanMessage.classList.add("messageDisplay");
+
+                    var output;
+                    if (message.isMetaMessage) {
+                        output = message.username + message.message;
+                        div.classList.add("metaMessage");
+                    } else {
+                        console.log(message.message);
+                        output = "<b><i>" + message.username + "</i></b>:<br>" + marked(message.message, {
+                            sanitize: true,
+                            smartypants: true
+                        });
+                    }
+                    spanUsername.innerHTML = message.username + ":";
+                    spanMessage.innerHTML = marked(message.message, {
+                            sanitize: true,
+                            smartypants: true
+                        });
+                    div.appendChild(spanUsername);
+                    div.appendChild(document.createElement("br"));
+                    div.appendChild(spanMessage);
                     receiveBox.appendChild(div);
                     div.scrollIntoView();
                 }

@@ -31,7 +31,7 @@ function exitHandler() {
 process.on("SIGINT", exitHandler.bind());
 
 io.on('connection', function(socket){
-	socket.emit('loadMessages', messageList.slice(Math.max(messageList.length - 100, 0))); // give us all messages from (5 before end) to end
+	socket.emit('loadMessages', messageList.slice(Math.max(messageList.length - 100, 0))); // give us only the last x messages
 	
 	socket.on('disconnect', function(){
 		
