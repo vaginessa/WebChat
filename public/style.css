@@ -5,7 +5,8 @@
 }
 
 body {
-    font: 16px Helvetica, Arial;
+    font-size: 16px;
+    font-family: sans-serif;
     height: 100%;
     width: 100%;
     position: absolute;
@@ -37,7 +38,7 @@ body {
 }
 
 #inputBox {
-    font: 14px Helvetica, Arial;
+    font-size: 14px;
     resize: none;
     border: 0;
     padding: 10px;
@@ -55,8 +56,13 @@ body {
     cursor: pointer
 }
 
-.metaMessage {
+.online {
     background-color: #c4f7c4 !important;
+}
+
+.offline {
+    background-color: #f77f79 !important;
+
 }
 
 .usernameDisplay {
