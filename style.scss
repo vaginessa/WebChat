@@ -18,7 +18,7 @@ body, html {
 #receiveMessageContainer {
     height: 100%;
     overflow: auto;
-    div#sendButton {
+    div {
         padding: 5px 10px;
         &:nth-child(odd) {
             background: #eee;
@@ -40,7 +40,7 @@ body, html {
         display: table-cell;
     }
     #inputBox {
-        font-size: 14px;
+        font-size: 18px;
         font-family: sans-serif;
         resize: none;
         border: 0;
@@ -58,6 +58,7 @@ body, html {
         cursor: pointer;
         text-align: center;
         vertical-align: middle;
+        user-select: none;
     }
 }
 
@@ -79,7 +80,6 @@ div {
 //login-modal
 
 #modalContainer {
-    display: none !important;
     display: flex;
     position: fixed;
     width: 100%;
