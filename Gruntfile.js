@@ -65,6 +65,6 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask('default', ['css','','watch']);
+    grunt.registerTask('default', ['css','develop','watch']);
     grunt.registerTask('css', ['sass', 'postcss']);
 };
