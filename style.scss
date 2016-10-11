@@ -1,24 +1,24 @@
+$sendHeight: 60px;
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
+body, html {
     font-size: 16px;
     font-family: sans-serif;
     height: 100%;
-    width: 100%;
-    position: absolute;
+    overflow: hidden;
+    padding-bottom: $sendHeight/2; //halber padding da 2 Mal
+
 }
 
 #receiveMessageContainer {
-    position: absolute;
-    width: 100%;
     height: 100%;
-    overflow-y: scroll;
-    padding-bottom: 50px;
-    div {
+    overflow: auto;
+    div#sendButton {
         padding: 5px 10px;
         &:nth-child(odd) {
             background: #eee;
@@ -29,10 +29,11 @@ body {
 #sendMessageContainer {
     background: #000;
     padding: 3px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
-    width: 100%;
-    height: 50px;
+    left: 0;
+    right: 0;
+    height: $sendHeight;
 }
 
 #inputBox {
@@ -42,7 +43,6 @@ body {
     border: 0;
     padding: 10px;
     width: 90%;
-    margin-right: .5%;
     background-color: #FFFFFF;
     display: inline-block
 }
@@ -73,6 +73,7 @@ div {
 //login-modal
 
 #modalContainer {
+    display: none !important;
     display: flex;
     position: fixed;
     width: 100%;
@@ -87,11 +88,11 @@ div {
     padding: 20px;
     background-color: lightgray;
     h1 {
-        text-align:center;
+        text-align: center;
     }
     #usernameInput {
         margin-top: 20px;
-        text-align:center;
+        text-align: center;
         font-size: 25px;
         width: 100%;
         border: none;
