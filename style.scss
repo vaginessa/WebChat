@@ -105,3 +105,16 @@ div {
         background-color: darkgray;
     }
 }
+
+.bell {
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    height: 50px;
+    width: 50px;
+}
+
+.hidden {
+    display: none;
+}
