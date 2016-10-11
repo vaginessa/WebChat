@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", function() {
 
+    var notificationsEnabled = true;
+
     var username = "NoName";
     var modalContainer = document.getElementById("modalContainer");
     var modalInput = document.getElementById("usernameInput");
@@ -10,9 +12,25 @@ document.addEventListener("DOMContentLoaded", function() {
     var inputBox = document.getElementById("inputBox");
     var sendButton = document.getElementById("sendButton");
 
+    var bells = document.getElementsByClassName("bell");
+
+    for (var i = 0; i < bells.length; i++) {
+        bells[i].addEventListener("click", function(event) {
+            if (notificationsEnabled) {
+                document.getElementById("active").style.display = "none";
+                document.getElementById("inactive").style.display = "inline";
+            } else {
+                document.getElementById("active").style.display = "inline";
+                document.getElementById("inactive").style.display = "none";
+            }
+            notificationsEnabled = !notificationsEnabled; // disable or enable
+        });
+    }
+
     modalInput.addEventListener("keypress", function(key) { // check for enter/shift+enter
         if (key.keyCode === 13) {
-            console.log(modalInput);
+            if (!modalInput.value.trim())
+                return;
             username = modalInput.value;
             modalContainer.style.display = "none";
 
@@ -28,13 +46,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
             socket.addEventListener("receiveMessage", function(message) {
                 displayText(message);
-                notify(message.username + ": " + message.message);
+                if (username != message.username && !document.hasFocus() && notificationsEnabled) {
+                    notify(message.username + ": " + message.message);
+                }
             });
         }
     });
 
-    if (!Notification) {
-        alert('Desktop notifications not available in your browser. Try Chromium.');
+    if (typeof (Notification) == "undefined") {
+        alert('Desktop notifications not available in your browser.');
     } else if (Notification.permission !== "granted") {
         Notification.requestPermission();
     }
@@ -59,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         if (message.trim().length > 0) {
             inputBox.value = "";
-            console.log(message);
             socket.emit("chatMessage", {username: username, message: message});
         }
         event.preventDefault();
