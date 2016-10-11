@@ -32,9 +32,9 @@ process.on("SIGINT", exitHandler.bind());
 
 io.on('connection', function(socket){
 	socket.emit('loadMessages', messageList.slice(Math.max(messageList.length - 100, 0))); // give us only the last x messages
-	
+
 	socket.on('disconnect', function(){
-		
+
 	});
 	socket.on('chatMessage', function(message){
 		console.log(message);
@@ -42,8 +42,6 @@ io.on('connection', function(socket){
 		io.emit('receiveMessage', message);
 	});
 });
-
-
 
 http.listen(3000, function(){
   console.log('listening on *:3000');
