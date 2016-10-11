@@ -24,10 +24,11 @@ module.exports = function (grunt) {
         },
         watch: {
             options: {
+                // atBegin: true,
                 spawn: false,
                 livereload: true,
+                livereloadOnError: false,
                 debounceDelay: 500
-
             },
             server: {
                 files: [
@@ -44,15 +45,26 @@ module.exports = function (grunt) {
                 files: [
                     'style.scss'
                 ],
-                tasks: ['sass']
+                tasks: ['css']
             }
 
+        },
+        postcss: {
+            options: {
+                map: true,
+                processors: [
+                    require('autoprefixer')({
+                        browsers: '> 0.5% in AT, last 2 versions'
+                    }) // add vendor prefixes
+                ]
+            },
+            dist: {
+                src: 'public/style.css'
+            }
         }
+
     });
 
-    grunt.registerTask('default', [
-        'sass',
-        'develop',
-        'watch'
-    ]);
+    grunt.registerTask('default', ['css','','watch']);
+    grunt.registerTask('css', ['sass', 'postcss']);
 };
