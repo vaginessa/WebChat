@@ -97,7 +97,7 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('default', ['css', 'develop', 'watch']);
+    grunt.registerTask('default', ['css', 'js', 'develop', 'watch']);
     grunt.registerTask('css', ['sass', 'postcss']);
     grunt.registerTask('js', ['jshint', 'concat', 'uglify']);
 };
