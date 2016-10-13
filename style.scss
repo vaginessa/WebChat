@@ -2,6 +2,8 @@ $sendHeight: 60px;
 
 $semiTransparent: rgba(0, 0, 0, 0.5);
 
+$headerColor: #ff9800;
+
 * {
     margin: 0;
     padding: 0;
@@ -94,30 +96,28 @@ div {
     justify-content: center;
     align-items: center;
     z-index: 3;
+    transition: all 0.5s;
 }
 
 #modal {
-    padding: 20px;
+    //padding: 20px;
     background-color: white;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-    h1 {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    .header {
         text-align: center;
+        padding: 10px 20px;
+        background-color: $headerColor;
+        color: white;
     }
     #usernameInput {
-        margin-top: 20px;
+        padding: 20px;
         text-align: center;
         font-size: 25px;
         width: 100%;
         border: none;
-        border-bottom: 2px solid;
         background-color: white;
-        //transition:all 0.1s;
-        &:focus {
-            outline-style: none;
-            border-bottom: 4px solid;
-        }
     }
-    
+
 }
 
 .bell {
@@ -127,8 +127,4 @@ div {
     padding: 5px;
     height: 50px;
     width: 50px;
-}
-
-* {
-    transition: all 1s;
 }
