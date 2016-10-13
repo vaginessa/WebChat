@@ -6,6 +6,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
 var messageList;
+
+var listOfOnlinePeople = [];
+
 try {
     messageList = require('./save.json');
 } catch (ex) {
@@ -21,8 +24,22 @@ app.use(express.static("public"));
 
 
 io.on('connection', function(socket) {
-    socket.emit('loadMessages', messageList.slice(Math.max(messageList.length - 1000, 0))); // give us only the last x messages
 
+    //listOfOnlinePeople.push()
+    socket.emit('loadMessages', messageList.slice(Math.max(messageList.length - 1000, 0))); // give us only the last x messages
+    socket.on('personIsOnline', function(username) {
+        listOfOnlinePeople.push(username);
+        console.log(listOfOnlinePeople);
+        io.emit('receiveMessage', {username: username, message: " is now online!", isMetaMessage: true, isOnline: true})
+    });
+    socket.on('personIsOffline', function(username) {
+        var index = listOfOnlinePeople.indexOf(username);
+        if (index !== -1) {
+            listOfOnlinePeople.splice(index, 1);
+            console.log(listOfOnlinePeople);
+            io.emit('receiveMessage', {username: username, message: " is now offline.", isMetaMessage: true, isOnline: false});
+        }
+    });
     socket.on('chatMessage', function(message) {
         console.log(message);
         messageList.push(message);

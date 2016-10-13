@@ -55,7 +55,8 @@ document.addEventListener("DOMContentLoaded", function() { // only initialize ev
             usernameModalContainer.style.visibility = "hidden";
 
             socket = io(); // now establish the connection and then send an "online" message
-            socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true, isOnline: true});
+            socket.emit("personIsOnline", username);
+            //socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true, isOnline: true});
             sendMessageInputBox.focus(); // put focus on the message box
 
             // display the history of messages
@@ -89,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function() { // only initialize ev
 
     // before going offline, send an "offline" message to the server
     window.onbeforeunload = function() {
-        socket.emit("chatMessage", {username: username, message: " is now offline.", isMetaMessage: true, isOnline: false});
+        socket.emit("personIsOffline", username);
     };
 
     /* HELPER METHODS */

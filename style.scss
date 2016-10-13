@@ -1,7 +1,5 @@
 $sendHeight: 60px;
 
-$semiTransparent: rgba(0, 0, 0, 0.5);
-
 $headerColor: #ff9800;
 
 * {
@@ -92,7 +90,6 @@ div {
     width: 100%;
     height: 100%;
     background-color: #C1C1C1;
-    //background-color: $semiTransparent;
     justify-content: center;
     align-items: center;
     z-index: 3;
