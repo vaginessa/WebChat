@@ -1,5 +1,5 @@
 'use strict';
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     // show elapsed time at the end
     require('time-grunt')(grunt);
     // load all grunt tasks
@@ -38,9 +38,12 @@ module.exports = function (grunt) {
             },
             reload: {
                 files: [
-                    'index.html',
-                    'public/chatscript.io'
+                    'index.html'
                 ]
+            },
+            js: {
+                files: "*.js",
+                tasks: "js"
             },
             css: {
                 files: [
@@ -62,10 +65,39 @@ module.exports = function (grunt) {
             dist: {
                 src: 'public/style.css'
             }
-        }
+        },
+        jshint: {
+            options: {
+                '-W083': true
+            },
+            dist: "chatscript.js"
 
+        },
+        concat: {
+            options: {
+                sourceMap: true
+            },
+            user: {
+                src: ['node_modules/socket.io-client/socket.io.js', 'chatscript.js'],
+                dest: 'public/script.js'
+            }
+        },
+        uglify: {
+            options: {
+                sourceMap: true
+                // mangle: {
+                //     except: ['_paq']
+                // },
+            },
+            dist: {
+                files: {
+                    'public/script.min.js': 'public/script.js'
+                }
+            }
+        }
     });
 
-    grunt.registerTask('default', ['css','develop','watch']);
+    grunt.registerTask('default', ['css', 'develop', 'watch']);
     grunt.registerTask('css', ['sass', 'postcss']);
+    grunt.registerTask('js', ['jshint', 'concat', 'uglify']);
 };

@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() { // only initialize ev
             socket.emit("chatMessage", {username: username, message: message}); // and send the message to the server
         }
         event.preventDefault(); // prevent default submit behaviour (refresh)
-    };
+    }
 
     // sending a notification
     function notify(text) {
