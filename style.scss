@@ -11,8 +11,10 @@ body, html {
     font-family: sans-serif;
     height: 100%;
     overflow: hidden;
-    padding-bottom: $sendHeight/2; //halber padding da 2 Mal
+}
 
+body {
+    padding-bottom: $sendHeight;
 }
 
 #receiveMessageContainer {
@@ -113,8 +115,4 @@ div {
     padding: 5px;
     height: 50px;
     width: 50px;
-}
-
-.hidden {
-    display: none;
 }
