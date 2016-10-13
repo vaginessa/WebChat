@@ -1,3 +1,5 @@
+/* global __dirname */
+
 var express = require('express');
 var app = express();
 var http = require('http').Server(app);
@@ -19,11 +21,8 @@ app.use(express.static("public"));
 
 
 io.on('connection', function(socket) {
-    socket.emit('loadMessages', messageList.slice(Math.max(messageList.length - 100, 0))); // give us only the last x messages
+    socket.emit('loadMessages', messageList.slice(Math.max(messageList.length - 1000, 0))); // give us only the last x messages
 
-    socket.on('disconnect', function() {
-
-    });
     socket.on('chatMessage', function(message) {
         console.log(message);
         messageList.push(message);
@@ -31,10 +30,8 @@ io.on('connection', function(socket) {
     });
 });
 process.on("SIGINT", function() {
-    console.log(JSON.stringify(messageList));
-    fs.writeFileSync("save.json", JSON.stringify(messageList), "utf8", function(message) {
-        console.log("Save to Json: " + message);
-    });
+    // only save the last x messages
+    fs.writeFileSync("save.json", JSON.stringify(messageList.slice(Math.max(messageList.length - 1000, 0))), "utf8");
     process.exit();
 });
 
