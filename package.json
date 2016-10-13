@@ -2,6 +2,11 @@
   "name": "WebChat",
   "version": "0.0.1",
   "description": "SOCKET CHAT",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aenadon/webchat"
+  },
   "dependencies": {
     "express": "^4.14.0",
     "socket.io": "^1.5.0"
