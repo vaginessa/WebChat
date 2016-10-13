@@ -46,11 +46,13 @@ document.addEventListener("DOMContentLoaded", function() { // only initialize ev
     }
 
     usernameModalInput.addEventListener("keypress", function(key) { // check for enter
-        if (key.keyCode === 13) { // if enter was pressed
+        if (key.keyCode === 13 && !username) { // if enter was pressed
             if (!usernameModalInput.value.trim()) return; // if nothing entered, stop
             // assign the chosen username and remove the chooser box
             username = usernameModalInput.value;
-            usernameModalContainer.style.display = "none";
+            
+            usernameModalContainer.style.opacity = 0;
+            usernameModalContainer.style.visibility = "hidden";
 
             socket = io(); // now establish the connection and then send an "online" message
             socket.emit("chatMessage", {username: username, message: " is now online!", isMetaMessage: true, isOnline: true});
