@@ -36,9 +36,10 @@ module.exports = function (grunt) {
                 ],
                 tasks: ['develop']
             },
-            html: {
+            reload: {
                 files: [
-                    'index.html'
+                    'index.html',
+                    'public/chatscript.io'
                 ]
             },
             css: {
